@@ -1,4 +1,4 @@
-# DecodeHeritage 3D scroll website
+# DCode Heritage 3D scroll website
 
 React + Vite + Three.js + React Three Fiber. The DNA particles begin scattered and progressively interpolate into a double helix as the visitor scrolls.
 

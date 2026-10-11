@@ -367,7 +367,7 @@ export default function App() {
   return (
     <div className="app-shell">
       <header className="site-header">
-        <a className="brand" href="#home" aria-label="DecodeHeritage home"><Dna size={29} strokeWidth={1.35} /><span>DecodeHeritage</span></a>
+        <a className="brand" href="#home" aria-label="DCode Heritage home"><Dna size={29} strokeWidth={1.35} /><span>DCode Heritage</span></a>
         <button className="menu-toggle" type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -423,10 +423,10 @@ export default function App() {
       </section>
 
       <footer className="site-footer" id="contact">
-        <a className="brand" href="#home"><Dna size={27} strokeWidth={1.35} /><span>DecodeHeritage</span></a>
+        <a className="brand" href="#home"><Dna size={27} strokeWidth={1.35} /><span>DCode Heritage</span></a>
         <p>Genetic insights for a brighter tomorrow.</p>
-        <a href="mailto:hello@decodeheritage.com">hello@decodeheritage.com</a>
-        <small>© {new Date().getFullYear()} DecodeHeritage</small>
+        <a href="mailto:hello@DCode Heritage.com">hello@DCode Heritage.com</a>
+        <small>© {new Date().getFullYear()} DCode Heritage</small>
       </footer>
     </div>
   );
