@@ -137,18 +137,28 @@ function DNAHelix({ scrollProgress }) {
     const direction = new THREE.Vector3();
 
     const setBeads = (mesh, positions) => {
+      const strandBase = new THREE.Color(positions === helix.strandA ? "#159dce" : "#08718f");
+      const strandHighlight = new THREE.Color(positions === helix.strandA ? "#70dff1" : "#39b4c9");
+      const amber = new THREE.Color("#efaa58");
+
       for (let index = 0; index < helix.beadCount; index++) {
         matrixHelper.position.fromArray(positions, index * 3);
         matrixHelper.scale.setScalar(0.078);
         matrixHelper.quaternion.identity();
         matrixHelper.updateMatrix();
         mesh.setMatrixAt(index, matrixHelper.matrix);
+
+        const color = index % 29 === 0
+          ? amber
+          : strandBase.clone().lerp(strandHighlight, index % 7 === 0 ? 0.8 : 0.12);
+        mesh.setColorAt(index, color);
       }
       mesh.instanceMatrix.needsUpdate = true;
+      mesh.instanceColor.needsUpdate = true;
       mesh.computeBoundingSphere();
     };
 
-    const setLinks = (mesh, positions, count, radius) => {
+    const setLinks = (mesh, positions, count, radius, baseColor, highlightColor) => {
       for (let index = 0; index < count; index++) {
         const offset = index * 3;
         start.fromArray(positions, offset);
@@ -160,15 +170,18 @@ function DNAHelix({ scrollProgress }) {
         matrixHelper.scale.set(radius, length, radius);
         matrixHelper.updateMatrix();
         mesh.setMatrixAt(index, matrixHelper.matrix);
+        const color = baseColor.clone().lerp(highlightColor, index % 31 === 0 ? 0.7 : 0.08);
+        mesh.setColorAt(index, color);
       }
       mesh.instanceMatrix.needsUpdate = true;
+      mesh.instanceColor.needsUpdate = true;
       mesh.computeBoundingSphere();
     };
 
     setBeads(beadsA.current, helix.strandA);
     setBeads(beadsB.current, helix.strandB);
-    setLinks(railsA.current, helix.strandA, helix.beadCount - 1, 0.012);
-    setLinks(railsB.current, helix.strandB, helix.beadCount - 1, 0.012);
+    setLinks(railsA.current, helix.strandA, helix.beadCount - 1, 0.012, new THREE.Color("#137da6"), new THREE.Color("#56cde3"));
+    setLinks(railsB.current, helix.strandB, helix.beadCount - 1, 0.012, new THREE.Color("#075e78"), new THREE.Color("#35a9c2"));
 
     for (let index = 0; index < helix.rungCount; index++) {
       const offset = index * 6;
@@ -181,8 +194,11 @@ function DNAHelix({ scrollProgress }) {
       matrixHelper.scale.set(0.009, length, 0.009);
       matrixHelper.updateMatrix();
       rungs.current.setMatrixAt(index, matrixHelper.matrix);
+      const color = index % 5 === 0 ? new THREE.Color("#e88648") : new THREE.Color(index % 2 ? "#f5c879" : "#eaa34c");
+      rungs.current.setColorAt(index, color);
     }
     rungs.current.instanceMatrix.needsUpdate = true;
+    rungs.current.instanceColor.needsUpdate = true;
     rungs.current.computeBoundingSphere();
   }, [helix, matrixHelper]);
 
@@ -293,23 +309,23 @@ function DNAHelix({ scrollProgress }) {
       </points>
       <instancedMesh ref={railsA} args={[undefined, undefined, helix.beadCount - 1]}>
         <cylinderGeometry args={[1, 1, 1, 12]} />
-        <meshPhysicalMaterial ref={railMaterialA} color="#117eae" roughness={0.27} metalness={0.15} clearcoat={0.8} transparent />
+        <meshPhysicalMaterial ref={railMaterialA} color="#ffffff" roughness={0.27} metalness={0.15} clearcoat={0.8} transparent />
       </instancedMesh>
       <instancedMesh ref={railsB} args={[undefined, undefined, helix.beadCount - 1]}>
         <cylinderGeometry args={[1, 1, 1, 12]} />
-        <meshPhysicalMaterial ref={railMaterialB} color="#075e80" roughness={0.24} metalness={0.18} clearcoat={0.9} transparent />
+        <meshPhysicalMaterial ref={railMaterialB} color="#ffffff" roughness={0.24} metalness={0.18} clearcoat={0.9} transparent />
       </instancedMesh>
       <instancedMesh ref={rungs} args={[undefined, undefined, helix.rungCount]}>
         <cylinderGeometry args={[1, 1, 1, 12]} />
-        <meshPhysicalMaterial ref={rungMaterial} color="#efa94f" roughness={0.3} metalness={0.12} clearcoat={0.65} transparent />
+        <meshPhysicalMaterial ref={rungMaterial} color="#ffffff" roughness={0.3} metalness={0.12} clearcoat={0.65} transparent />
       </instancedMesh>
       <instancedMesh ref={beadsA} args={[undefined, undefined, helix.beadCount]}>
         <sphereGeometry args={[1, 18, 14]} />
-        <meshPhysicalMaterial ref={beadMaterialA} color="#129bd4" roughness={0.22} metalness={0.1} clearcoat={1} clearcoatRoughness={0.16} transparent />
+        <meshPhysicalMaterial ref={beadMaterialA} color="#ffffff" roughness={0.22} metalness={0.1} clearcoat={1} clearcoatRoughness={0.16} transparent />
       </instancedMesh>
       <instancedMesh ref={beadsB} args={[undefined, undefined, helix.beadCount]}>
         <sphereGeometry args={[1, 18, 14]} />
-        <meshPhysicalMaterial ref={beadMaterialB} color="#08769a" roughness={0.2} metalness={0.13} clearcoat={1} clearcoatRoughness={0.16} transparent />
+        <meshPhysicalMaterial ref={beadMaterialB} color="#ffffff" roughness={0.2} metalness={0.13} clearcoat={1} clearcoatRoughness={0.16} transparent />
       </instancedMesh>
     </group>
   );
