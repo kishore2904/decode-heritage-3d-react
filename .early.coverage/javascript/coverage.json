@@ -1,0 +1,43 @@
+{
+  "/src": {
+    "percentage": null,
+    "totalStatements": null,
+    "coveredStatements": null
+  },
+  "/": {
+    "percentage": null,
+    "totalStatements": null,
+    "coveredStatements": null
+  },
+  "/src/App.jsx": {
+    "percentage": null,
+    "totalStatements": null,
+    "coveredStatements": null,
+    "testables": [
+      {
+        "name": "DNAAssembly",
+        "percentage": null,
+        "totalStatements": null,
+        "coveredStatements": null
+      },
+      {
+        "name": "DNAStage",
+        "percentage": null,
+        "totalStatements": null,
+        "coveredStatements": null
+      },
+      {
+        "name": "App",
+        "percentage": null,
+        "totalStatements": null,
+        "coveredStatements": null
+      }
+    ]
+  },
+  "/src/main.jsx": {
+    "percentage": null,
+    "totalStatements": null,
+    "coveredStatements": null,
+    "testables": []
+  }
+}
